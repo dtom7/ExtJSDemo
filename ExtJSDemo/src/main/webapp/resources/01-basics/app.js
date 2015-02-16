@@ -1,14 +1,18 @@
-Ext.onReady(function() {
-	// alert("We're ready to go!");
-	// Ext.Msg.alert("Alert","We're ready to go!");
-	Ext.Msg.confirm("Confirm", "Do you like Ext JS?", response);
-
+Ext.define('MyApp.car.BaseCar', {
+        engine : 'I4',
+        turbo : false,
+        wheels : 'basic',
+        constructor : function(config) {
+            this.octaneRequired = 86;
+            this.shiftTo = function(gear) {
+                this.gear = gear;
+            };
+            this.shiftTo('park');
+        },
+        getEngine : function() {
+            return this.engine;
+        },
+        drive : function() {
+            console.log("Vrrrrooooooom - I'm driving!");
+        }
 });
-
-function response(btn) {
-	if (btn === "yes") {
-		Ext.Msg.alert("Great!", "This is great!");
-	} else {
-		Ext.Msg.alert("Really?", "That's too bad.");
-	}
-}

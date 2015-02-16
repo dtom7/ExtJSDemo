@@ -10,7 +10,41 @@
 <script type="text/javascript"
 	src="http://cdn.sencha.com/ext/gpl/4.2.1/ext-all.js"></script>
 <!-- Importing our application -->
-<script type="text/javascript" src="app.js"></script>
+<!-- <script type="text/javascript" src="app.js"></script> -->
+<script type="text/javascript" src="Client.js"></script>
+<script type="text/javascript" src="Category.js"></script>
+<script type="text/javascript" src="SubCategory.js"></script>
+
+<script>
+
+/* var category = Ext.create("Category", {
+	id : 1,
+	name : "John D",
+	description : "Test Description"
+});
+
+console.log(category.get("name"));
+console.log(category.__proto__ instanceof Ext.data.Model); */ 
+console.log(SubCategory.sequence);
+var subCategory = Ext.create("SubCategory", {
+	id : 2,
+	name : "John S",
+	description : "Test Description"
+}); 
+
+console.log(subCategory.get("name"));
+console.log(SubCategory.hasOwnProperty("sequence"));
+console.log(SubCategory.sequence);
+
+var client = Ext.create("Client", {
+	name : "Fey"
+});
+console.log(client.hasOwnProperty("name"));
+console.log(client.name);
+
+</script>
+
+
 </head>
 
 
