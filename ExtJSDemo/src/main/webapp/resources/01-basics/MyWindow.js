@@ -25,26 +25,13 @@ Ext.define("MyWindow", {
     listeners: {
         beforeclose: function( window ) {
         	console.log("On beforeclose");
-/*            Ext.Msg.confirm( 'Hey', 'Are you sure you want to close?', function( answer ) {
+            Ext.Msg.confirm( 'Hey', 'Are you sure you want to close?', function( answer ) {
                 if( answer == "yes" ) {
-                   // window.destroy();
-                	return true;
-                } else {
-                	return false;
-                }
-            } );*/
-            return this.confirm();
+                   window.destroy();
+                } 
+            } );
+            return false;
         }
     },
-	
-	confirm : function() {
-/*		Ext.Msg.confirm('Confirm', 'Are you sure you want to close?', function(btn) {
-	        if (btn === 'yes') {
-	            return true;
-	        } else {
-	            return false;
-	        }
-		});*/
-	}
 
 });
