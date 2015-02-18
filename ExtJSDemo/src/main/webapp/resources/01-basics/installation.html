@@ -15,20 +15,29 @@
 <script type="text/javascript" src="Category.js"></script>
 <script type="text/javascript" src="SubCategory.js"></script>
 <script type="text/javascript" src="LC.js"></script>
-<script type="text/javascript" src="Cont.js"></script>
+<script type="text/javascript" src="MyWindow.js"></script>
 <script>
 	Ext.onReady(function() {
 
-		Ext.create("Cont", {
-			renderTo : Ext.getBody(),
+		var win = Ext.create("MyWindow", {
+			title : "My first window",
+			width : 300,
+			height : 200,
+			maximizable : true,
+			defaults : {
+				xtype : "panel",
+				height : 60,
+				collapsible : true
+			},
 			items : [ {
-				xtype : "component",
-				html : "Component one"
+				title : "Menu",
+				html : "The main menu"
 			}, {
-				xtype : "component",
-				html : "Component two"
+				title : "Content",
+				html : "The main content!"
 			} ]
 		});
+		win.show();
 
 	});
 </script>
