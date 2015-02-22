@@ -1,0 +1,25 @@
+#header {
+	background-color: #1E90FF;
+	color: black;
+	text-align: center;
+	height: 70px;
+}
+
+table {
+	height: 70px;
+	width: 100%;
+}
+
+td {
+	padding: 20px;
+}
+
+.td-left-data {
+	font-size: 20px;
+	text-align: left;
+	vertical-align: top;
+}
+
+.td-right-data {
+	text-align: right;
+}
