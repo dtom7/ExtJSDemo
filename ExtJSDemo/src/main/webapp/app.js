@@ -1,60 +1,28 @@
+Ext.require("My.model.Invoice");
 Ext.onReady(function() {
 
-	var myTpl = Ext.create('Ext.Template', [
-			'<div style="background-color: {color};">',
-			'<b> Welcome: </b> {name}<br />', '</div>' ]);
+	var invoice = Ext.create("My.model.Invoice", {
+	/*
+	 * invoiceId : 1000, taxId : '12345', dateIssued : '01/01/2014', name : 'Mr.
+	 * Doe', address : '123 ST 987 LA. USA'
+	 */
+	});
+	invoice.set({
+		invoiceId : 1001,
+		taxId : '12345',
+		dateIssued : '01/01/2014',
+		name : 'Mr. Doe',
+		address : '123 ST 987 LA. USA'
+	});
 
-	myTpl.compile();
+	if (invoice.isValid()) { // Step 2
+		console.log('Everything is fine!');
+	} else {
+		var errors = invoice.validate(); // Step 3
+		errors.each(function(error) {
+			console.log(error.field, error.message);
+		});
 
-	var win = Ext
-			.create(
-					'Ext.container.Viewport',
-					{
-						layout : {
-							type : 'border',
-							//padding : 2
-						},
-						items : [
-								{
-									region : 'north',
-									margins : '0 0 0 0',
-									//title : 'Consultant Home',
-									height : 70,
-/*									tpl : myTpl,
-									data : {
-										name : 'Carl',
-										color : 'white'
-									}*/
-									html : "<div id='header'><table><tr><td class='td-left-data'>Welcome, Don</td><td></td><td class='td-right-data'>Logout</td></tr></table></div>"
-								},
-								{
-									region : 'west',
-									xtype : 'panel',
-									title : 'Navigation',
-									width : 200,
-									split : true,
-									collapsible : true,
-									floatable : false
-								}, {
-									region : 'center',
-									xtype : 'tabpanel',
-									items : [
-									/*
-									 * { rtl : false, title : 'Bogus Tab', html : '<p>Window
-									 * configured with:</p><pre style="margin-left:20px"><code>header:
-									 * {\n titlePosition: 2,\n titleAlign:
-									 * "center"\n},\nmaximizable: true,\ntools:
-									 * [{type: "pin"}],\nclosable: true</code></pre>' }, {
-									 * title : 'Another Tab', html : 'Hello
-									 * world 2' }, { title : 'Closable Tab',
-									 * html : 'Hello world 3', closable : true }
-									 */]
-								},{
-									region : 'south',
-									xtype : 'panel',
-									height : 20,
-									html: 'Southern Stuff here'
-								}  ]
-					}).show();
+	}
 
 });
