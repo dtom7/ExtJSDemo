@@ -2,8 +2,12 @@ Ext.define('My.store.Invoices', {
 	extend : 'Ext.data.Store',
 	model : 'My.model.Invoice',
 	proxy : {
-		type : 'ajax',
-		// url : 'REST/getInvoices',
+		type : 'ajax',	
+		filters: {
+            // filter the data to only include users with the name 'Ed'
+            property: 'name',
+            value: 'Ed'
+        },
 		api : {
 			create : 'REST/postInvoices',
 			read : 'REST/getInvoices',

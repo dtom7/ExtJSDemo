@@ -37,7 +37,16 @@ public class RESTController {
     	
         List<Invoice> list = new ArrayList<>();
         list.add(new Invoice(1000, "12345", "Victor", "123 Main St", df.format(new Date())));
-        list.add(new Invoice(1001, "67890", "Mark", "456 Main St", df.format(new Date())));
+        list.add(new Invoice(1001, "12346", "Mark", "456 Main St", df.format(new Date())));
+        list.add(new Invoice(1002, "12347", "Carl", "789 Main St", df.format(new Date())));
+        list.add(new Invoice(1003, "12348", "Zen", "784 Main St", df.format(new Date())));
+        list.add(new Invoice(1004, "12349", "Chris", "258 Main St", df.format(new Date())));
+        list.add(new Invoice(1005, "12346", "Benny", "322 Main St", df.format(new Date())));
+        list.add(new Invoice(1006, "12351", "Sunny", "951 Main St", df.format(new Date())));
+        list.add(new Invoice(1007, "12352", "Kumar", "878 Main St", df.format(new Date())));
+        list.add(new Invoice(1008, "12351", "Nino", "357 Main St", df.format(new Date())));
+        list.add(new Invoice(1009, "12354", "Ivan", "985 Main St", df.format(new Date())));
+        
         return new InvoiceJSONWrapper(true, list);
     }
     
