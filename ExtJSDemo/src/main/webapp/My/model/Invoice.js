@@ -1,7 +1,7 @@
 Ext.define('My.model.Invoice', {
-	extend : 'Ext.data.Model', // Step 1
-	idProperty : 'invoiceId',// Step 2
-	fields : [ // Step 3
+	extend : 'Ext.data.Model', 
+	idProperty : 'invoiceId',
+	fields : [ 
 	{
 		name : 'invoiceId',
 		type : 'int'
@@ -10,7 +10,7 @@ Ext.define('My.model.Invoice', {
 	}, {
 		name : 'dateIssued',
 		type : 'date',
-		dateFormat : 'mm/dd/YYYY'
+		dateFormat : 'm/d/Y'
 	}, {
 		name : 'name'
 	}, {
@@ -31,5 +31,9 @@ Ext.define('My.model.Invoice', {
 		type : 'format',
 		field : 'name',
 		matcher : /^[\w ]+$/
-	} ]
+	} ]/*,
+	hasMany : [ {
+		model : 'My.model.Item',
+		name : 'getItems'
+	} ]*/
 });
