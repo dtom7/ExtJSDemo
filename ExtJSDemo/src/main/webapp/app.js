@@ -1,29 +1,32 @@
 Ext.onReady(function() {
 
-	Ext.MessageBox.show({
-		title : 'Hold on there cowboy!',
-		msg : "We're doing something...",
-		progressText : 'Initializing...',
-		width : 300,
-		progress : true,
-		closable : false
+	var tabPanel = Ext.create('Ext.tab.Panel', {
+		activeTab : 0,
+		itemId : 'myTPanel'
 	});
-	var updateFn = function(num) {
-		setTimeout(function() {
-			if (num == 6) {
-				Ext.MessageBox.updateProgress(100, 'All Items saved !!');
-				Ext.Function.defer(Ext.MessageBox.hide, 1500, Ext.MessageBox);
-			} else {
-				var i = num / 6;
-				var pct = Math.round(100 * i);
-				Ext.MessageBox.updateProgress(i, pct + '% completed');
-			}
-		}, i * 500);
-	};
-	for (var i = 1; i < 7; i++) {
-		console.log("i " + i);
-		updateFn(i);
-		
-	}
+
+	Ext.create('Ext.window.Window', {
+		height : 300,
+		width : 400,
+		layout : 'fit',
+		items : tabPanel
+	}).show();
+
+	Ext.Ajax.request({
+		url : "REST/getTabs",
+		success : function(response, options) {
+			console.log('ajax success');
+			var obj = Ext.decode(response.responseText);
+			console.log(obj.data);
+			var tPanel = Ext.ComponentQuery.query('#myTPanel')[0];
+			tPanel.add(obj.data);
+			tPanel.setActiveTab('Tab_1');
+		},
+		failure : function(response, options) {
+			console.log('ajax failed');
+		}
+	});
+
+
 
 });

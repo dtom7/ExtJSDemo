@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.extjs.domain.Greeting;
 import com.example.extjs.domain.Invoice;
 import com.example.extjs.domain.InvoiceJSONWrapper;
+import com.example.extjs.domain.Tab;
+import com.example.extjs.domain.TabWrapper;
 
 @RestController
 @RequestMapping("/REST")
@@ -57,6 +59,16 @@ public class RESTController {
     		System.out.println(invoice);
     	}
     	return true;
+    }
+    
+    @RequestMapping("/getTabs")
+    public TabWrapper getTabs() {
+    	
+    	 List<Tab> list = new ArrayList<>();
+    	 list.add(new Tab("Tab - 1","Tab_1","This is the first tab"));
+    	 list.add(new Tab("Tab - 2","Tab_2","This is the second tab"));
+    	 list.add(new Tab("Tab - 3","Tab_3","This is the third tab"));
+    	 return new TabWrapper(true, list);
     }
 
 }
