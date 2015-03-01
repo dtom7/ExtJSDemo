@@ -1,63 +1,76 @@
 Ext.onReady(function() {
-	
-	Ext.form.field.VTypes.emailText = 'Please enter a valid e-mail id';
 
-	var fpItems = [ {
-		fieldLabel : 'Email ID',
-		name : 'userId',
-		allowBlank : false,
-		vtype: 'email',
-		blankText: 'Email ID cannot be blank'
-	}, {
-		fieldLabel : 'Password',
-		name : 'password',
-		allowBlank : false,
-		inputType : 'password',
-		blankText: 'Password cannot be blank'
-	} ];
+	var headertpl = Ext.create('Ext.Template', "<div id='header'><table><tr>", "<td class='td-left-data'>Welcome, {name}</td>", "<td></td>",
+			"<td class='td-right-data'><button id='logout_btn'>Logout</button></td>", "</tr></table></div>");
+	headertpl.compile();
 
-	var fp = Ext.create('Ext.form.Panel', {
-		renderTo : Ext.getBody(),
-		width : 400,
-		height : 160,
-		title : 'Authenticate',
-		frame : true,
-		bodyStyle : 'padding: 6px',
-		labelWidth : 126,
-		defaultType : 'textfield',
-		defaults : {
-			msgTarget : 'side',
-			anchor : '-10'
+	var win = Ext.create('Ext.container.Viewport', {
+		layout : {
+			type : 'border',
 		},
-		items : fpItems,
-		buttons : [ {
-			text : 'Submit',
-		        handler: function() {
-		            // The getForm() method returns the Ext.form.Basic instance:
-		            var form = this.up('form').getForm();
-		            if (form.isValid()) {
-		                // Submit the Ajax request and handle the response
-		                form.submit({
-		                	url : 'REST/sprocessLogin',
-		                    success: function(form, action) {
-		                       Ext.Msg.alert('Success', action.result.msg);
-		                    },
-		                    failure: function(form, action) {
-		                        Ext.Msg.alert('Failed', action.result ? action.result.msg : 'No response');
-		                    }
-		                });
-		            }
-		        }
-		}, {
-			text : 'Reset',
-			handler: function() {
-			var form = this.up('form').getForm();
-			form.reset();
+		items : [ {
+			region : 'north',
+			id : 'north_region',
+			margins : '0 0 0 0',
+			height : 70,
+			tpl : headertpl,
+			data : {
+				name : 'User'
 			}
-		} ]
+		// html : "<div id='header'></div>"
+		}, {
+			region : 'center',
+			xtype : 'tabpanel',
+			items : [
 
-	});
-	
-	fp.center();
+			]
+		}, {
+			region : 'south',
+			xtype : 'panel',
+			height : 20,
+			html : 'Southern Stuff here'
+		} ],
+		listeners : {
+
+			render : function() {
+				console.log("render");
+			},
+
+			afterrender : function() {
+				console.log("afterrender");
+
+				Ext.Ajax.request({
+					url : 'REST/getUser',
+					success : function(response, opts) {
+						console.log("ajax success");
+						var obj = Ext.decode(response.responseText);
+						// Populate the logged
+						// in user name
+						Ext.getCmp('north_region').update(obj.user);
+						Ext.get('logout_btn').on('click', function(e, t, eOpts) {
+							console.log("logout handler");
+
+							Ext.Ajax.request({
+								url : 'REST/processLogout',
+								success : function(response, opts) {
+									console.log("ajax success");
+									var obj = Ext.decode(response.responseText);
+									window.location.assign("REST/getTabs");
+								},
+								failure : function(response, opts) {
+									console.log("ajax.failed");
+								},
+							});
+						});
+					},
+					failure : function(response, opts) {
+						console.log("ajax failed");
+					},
+				});
+
+				// Populate the navigation list
+			}
+		}
+	}).show();
 
 });

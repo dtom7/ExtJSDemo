@@ -17,8 +17,11 @@ import com.example.extjs.domain.Greeting;
 import com.example.extjs.domain.Invoice;
 import com.example.extjs.domain.InvoiceJSONWrapper;
 import com.example.extjs.domain.LoginWrapper;
+import com.example.extjs.domain.LogoutWrapper;
 import com.example.extjs.domain.Tab;
 import com.example.extjs.domain.TabWrapper;
+import com.example.extjs.domain.User;
+import com.example.extjs.domain.UserWrapper;
 
 @RestController
 @RequestMapping("/REST")
@@ -83,11 +86,25 @@ public class RESTController {
 	}
 
 	@RequestMapping(value = "/processLogin", method = RequestMethod.POST)
-	public LoginWrapper processLogin(@RequestParam(value = "userId") String userId,
+	public LoginWrapper processLogin(
+			@RequestParam(value = "userId") String userId,
 			@RequestParam(value = "password") String password) {
 		System.out.println("userid: " + userId + " -- password: " + password);
 
 		return new LoginWrapper(true, "Login Success");
+	}
+	
+	@RequestMapping(value = "/processLogout")
+	public LogoutWrapper processLogout() {
+		System.out.println("Logout called ");
+
+		return new LogoutWrapper(true, "Logout Success");
+	}
+
+	@RequestMapping("/getUser")
+	public UserWrapper getUser() {
+
+		return new UserWrapper(true, new User("Samuel"));
 	}
 
 }

@@ -1,43 +1,76 @@
-Ext
-		.onReady(function() {
+Ext.onReady(function() {
 
-			var myTpl = Ext.create('Ext.Template', [
-					'<div style="background-color: {color};">',
-					'<b> Welcome: </b> {name}<br />', '</div>' ]);
+	var headertpl = Ext.create('Ext.Template', "<div id='header'><table><tr>", "<td class='td-left-data'>Welcome, {name}</td>", "<td></td>",
+			"<td class='td-right-data'><button id='logout_btn'>Logout</button></td>", "</tr></table></div>");
+	headertpl.compile();
 
-			myTpl.compile();
+	var win = Ext.create('Ext.container.Viewport', {
+		layout : {
+			type : 'border',
+		},
+		items : [ {
+			region : 'north',
+			id : 'north_region',
+			margins : '0 0 0 0',
+			height : 70,
+			tpl : headertpl,
+			data : {
+				name : 'User'
+			}
+		// html : "<div id='header'></div>"
+		}, {
+			region : 'center',
+			xtype : 'tabpanel',
+			items : [
 
-			var win = Ext
-					.create(
-							'Ext.container.Viewport',
-							{
-								layout : {
-									type : 'border',
-								// padding : 2
+			]
+		}, {
+			region : 'south',
+			xtype : 'panel',
+			height : 20,
+			html : 'Southern Stuff here'
+		} ],
+		listeners : {
+
+			render : function() {
+				console.log("render");
+			},
+
+			afterrender : function() {
+				console.log("afterrender");
+
+				Ext.Ajax.request({
+					url : 'REST/getUser',
+					success : function(response, opts) {
+						console.log("ajax success");
+						var obj = Ext.decode(response.responseText);
+						// Populate the logged
+						// in user name
+						Ext.getCmp('north_region').update(obj.user);
+						Ext.get('logout_btn').on('click', function(e, t, eOpts) {
+							console.log("logout handler");
+
+							Ext.Ajax.request({
+								url : 'REST/processLogout',
+								success : function(response, opts) {
+									console.log("ajax success");
+									var obj = Ext.decode(response.responseText);
+									window.location.assign("REST/getTabs");
 								},
-								items : [
-										{
-											region : 'north',
-											margins : '0 0 0 0',
-											// title : 'Consultant Home',
-											height : 70,
-											/*
-											 * tpl : myTpl, data : { name :
-											 * 'Carl', color : 'white' }
-											 */
-											html : "<div id='header'><table><tr><td class='td-left-data'>Welcome, Don</td><td></td><td class='td-right-data'>Logout</td></tr></table></div>"
-										}, {
-											region : 'center',
-											xtype : 'tabpanel',
-											items : [
+								failure : function(response, opts) {
+									console.log("ajax.failed");
+								},
+							});
+						});
+					},
+					failure : function(response, opts) {
+						console.log("ajax failed");
+					},
+				});
 
-											]
-										}, {
-											region : 'south',
-											xtype : 'panel',
-											height : 20,
-											html : 'Southern Stuff here'
-										} ]
-							}).show();
+				// Populate the navigation list
+			}
+		}
+	}).show();
 
-		});
+});
